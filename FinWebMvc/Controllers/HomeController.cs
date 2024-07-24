@@ -1,4 +1,4 @@
-using FinWebMvc.Models;
+using FinWebMvc.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 

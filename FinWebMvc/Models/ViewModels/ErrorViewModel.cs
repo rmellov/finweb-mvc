@@ -1,4 +1,4 @@
-namespace FinWebMvc.Models
+namespace FinWebMvc.Models.ViewModels
 {
     public class ErrorViewModel
     {
