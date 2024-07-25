@@ -20,7 +20,7 @@ namespace FinWebMvc.Models
 
         [DisplayName("Data do Registro")]
         [Required(ErrorMessage = "Data do registro é obrigatório")]
-        [DataType(DataType.DateTime)]
+        [DataType(DataType.Date)]
         public DateTime CreatedAt { get; set; } = DateTime.Now;        
 
         [DisplayName("Tipo")]
@@ -31,16 +31,15 @@ namespace FinWebMvc.Models
         [Required(ErrorMessage = "Status é obrigatório")]
         public bool Done { get; set; }
 
-        [DisplayName("Data da baixa")]
-        [Required(ErrorMessage = "Data da baixa é obrigatório")]
-        [DataType(DataType.DateTime)]
+        [DisplayName("Data da baixa")]        
+        [DataType(DataType.Date)]
         public DateTime? FinishedAt { get; set; }
 
         [DisplayName("Categoria")]
         [Required(ErrorMessage = "Categoria inválida")]
         public int CategoryId { get; set; }
 
-        public Category Category { get; set; } = null!;
+        public Category? Category { get; set; } = null!;
     }
 
     public enum ETypeRecord
