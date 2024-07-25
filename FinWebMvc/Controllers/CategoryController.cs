@@ -22,7 +22,9 @@ namespace FinWebMvc.Controllers
         // GET: Category
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Categories.ToListAsync());
+            return View(await _context.Categories
+                .OrderBy(x => x.Description)
+                .ToListAsync());
         }
 
         // GET: Category/Details/5
