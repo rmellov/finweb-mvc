@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "FinWeb";
+}
+
+@if (!User.Identity.IsAuthenticated)
+{
+    <div class="p-5 mb-4 bg-light rounded-3">
+        <div class="container-fluid py-5">
+            <h1 class="display-5 fw-bold">Finweb - Controle Financeiro</h1>
+            <p class="col-md-12 fs-4">Um sistema de controle financeiro ajuda a manter as finanças organizadas, otimiza o orçamento e facilita a tomada de decisões. Crie uma conta agora mesmo e comece a controlar suas finanças</p>
+            <a class="btn btn-primary btn-lg" asp-area="Identity" asp-page="/Account/Register">Começar Grátis</a>
+            <a class="btn btn-info btn-lg" asp-area="Identity" asp-page="/Account/Login">Já é usuário? Faça o login</a>
+        </div>
+    </div>
+}
+else
+{
+    <p>Aqui vai o dashboard</p>
+}
