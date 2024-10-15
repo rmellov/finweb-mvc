@@ -1,4 +1,7 @@
-﻿@model IEnumerable<FinWebMvcIdentity.Models.Category>
+﻿@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+
+@model IPagedList<FinWebMvcIdentity.Models.Category>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,13 +16,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                @Html.DisplayNameFor(model => model[0].Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Type)
+                @Html.DisplayNameFor(model => model[0].Type)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User)
+                @Html.DisplayNameFor(model => model[0].User)
             </th>
             <th></th>
         </tr>
@@ -45,3 +48,12 @@
 }
     </tbody>
 </table>
+
+<div class="text-center">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), new PagedListRenderOptions
+{
+    LiElementClasses = new[] { "page-item" },
+    PageClasses = new[] { "page-link" },
+    ContainerDivClasses = new[] { "pagination", "justify-content-center" }
+})
+</div>

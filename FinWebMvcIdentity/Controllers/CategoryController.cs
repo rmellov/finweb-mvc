@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using FinWebMvcIdentity.Data;
+﻿using FinWebMvcIdentity.Data;
 using FinWebMvcIdentity.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using X.PagedList.Extensions;
 
 namespace FinWebMvcIdentity.Controllers
 {
@@ -21,12 +17,17 @@ namespace FinWebMvcIdentity.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
-            return View(await _context.Categories
+            int pageSize = 5;
+            int pageNumber = page ?? 1;
+
+            var categoryContext = await _context.Categories
                 .AsNoTracking()
                 .Where(u => u.User == User.Identity.Name)
-                .ToListAsync());
+                .ToListAsync();
+
+            return View(categoryContext.ToPagedList(pageNumber, pageSize));            
         }        
 
         public IActionResult Create()

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using X.PagedList.Extensions;
 
 namespace FinWebMvcIdentity.Controllers
 {
@@ -17,14 +18,18 @@ namespace FinWebMvcIdentity.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
-            var applicationDbContext = _context.Records
+            int pageSize = 10;
+            int pageNumber = page ?? 1;
+
+            var applicationDbContext = await _context.Records
                 .AsNoTracking()
                 .Include(c => c.Category)
-                .Where(r => r.User == User.Identity.Name);
+                .Where(r => r.User == User.Identity.Name)
+                .ToListAsync();
 
-            return View(await applicationDbContext.ToListAsync());
+            return View(applicationDbContext.ToPagedList(pageNumber, pageSize));
         }        
 
         public IActionResult Create()
@@ -86,7 +91,7 @@ namespace FinWebMvcIdentity.Controllers
             {
                 try
                 {
-                    @record.User = User.Identity.Name;
+                    @record.User = User.Identity.Name;                    
                     _context.Update(@record);
                     await _context.SaveChangesAsync();
                 }

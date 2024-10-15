@@ -33,11 +33,11 @@ namespace FinWebMvcIdentity.Models
 
         [DisplayName("Data do Vencimento/Recebimento")]
         [Required(ErrorMessage = "Campo obrigatório")]
-        [DataType(DataType.DateTime)]
+        [DataType(DataType.Date)]
         public DateTime? MaturityPaymentDate { get; set; }
 
         [Required(ErrorMessage = "Campo obrigatório")]
-        public EStatus Status { get; set; }        
+        public EStatus Status { get; set; }
 
         public Category? Category { get; set; }
 

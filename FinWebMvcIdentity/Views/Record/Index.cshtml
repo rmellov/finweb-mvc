@@ -1,4 +1,7 @@
-﻿@model IEnumerable<FinWebMvcIdentity.Models.Record>
+﻿@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+
+@model IPagedList<FinWebMvcIdentity.Models.Record>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,28 +16,28 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Type)
+                @Html.DisplayNameFor(model => model[0].Type)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                @Html.DisplayNameFor(model => model[0].Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RegisterDate)
+                @Html.DisplayNameFor(model => model[0].RegisterDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Value)
+                @Html.DisplayNameFor(model => model[0].Value)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MaturityPaymentDate)
+                @Html.DisplayNameFor(model => model[0].MaturityPaymentDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Status)
+                @Html.DisplayNameFor(model => model[0].Status)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Category)
+                @Html.DisplayNameFor(model => model[0].Category)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User)
+                @Html.DisplayNameFor(model => model[0].User)
             </th>
             <th></th>
         </tr>
@@ -75,3 +78,12 @@
 }
     </tbody>
 </table>
+
+<div class="text-center">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), new PagedListRenderOptions
+    {
+        LiElementClasses = new[] { "page-item" },
+        PageClasses = new[] { "page-link" },
+        ContainerDivClasses = new[] { "pagination", "justify-content-center" }
+    })
+</div>
