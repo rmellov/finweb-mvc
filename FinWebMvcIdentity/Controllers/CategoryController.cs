@@ -25,6 +25,7 @@ namespace FinWebMvcIdentity.Controllers
             var categoryContext = await _context.Categories
                 .AsNoTracking()
                 .Where(u => u.User == User.Identity.Name)
+                .OrderBy(x => x.Description)
                 .ToListAsync();
 
             return View(categoryContext.ToPagedList(pageNumber, pageSize));            

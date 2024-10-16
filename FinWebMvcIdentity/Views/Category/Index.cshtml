@@ -7,13 +7,16 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+@if (TempData["AlertMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Alerta:</strong> @TempData["AlertMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
+<table class="table table-striped table-hover text-center">
+    <thead class="table-dark">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model[0].Description)
@@ -21,39 +24,42 @@
             <th>
                 @Html.DisplayNameFor(model => model[0].Type)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model[0].User)
-            </th>
-            <th></th>
+            <th>Editar/Excluir</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Type)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    <a class="btn btn-link" asp-action="Edit" asp-route-id="@item.Id">
+                        <i class="bi bi-pencil-square"></i>
+                    </a>
+                    <a class="btn btn-link" asp-action="Delete" asp-route-id="@item.Id">
+                        <i class="bi bi-trash-fill"></i>
+                    </a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 
-<div class="text-center">
-    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), new PagedListRenderOptions
-{
-    LiElementClasses = new[] { "page-item" },
-    PageClasses = new[] { "page-link" },
-    ContainerDivClasses = new[] { "pagination", "justify-content-center" }
-})
+<div class="d-flex justify-content-between align-items-center">
+    <div class="text-center flex-grow-1">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), new PagedListRenderOptions
+   {
+       LiElementClasses = new[] { "page-item" },
+       PageClasses = new[] { "page-link" },
+       ContainerDivClasses = new[] { "pagination", "justify-content-center" }
+   })
+    </div>
+    <p class="mb-0">
+        <a class="btn btn-dark" asp-action="Create">Nova Categoria</a>
+    </p>
 </div>
