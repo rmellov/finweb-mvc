@@ -1,4 +1,7 @@
-﻿@{
+﻿@using FinWebMvcIdentity.Models.ViewModel
+@model List<RecordByCategoryViewModel>
+
+@{
     ViewData["Title"] = "FinWeb";
 }
 
@@ -15,5 +18,32 @@
 }
 else
 {
-    <p>Aqui vai o dashboard</p>
+    <canvas id="despesasChart" width="400" height="200"></canvas>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var ctx = document.getElementById('despesasChart').getContext('2d');
+            var despesasChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Select(x => x.Category))),
+                    datasets: [{
+                        label: 'Despesas',
+                        data: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Select(x => x.Total))),
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+    </script>
 }
