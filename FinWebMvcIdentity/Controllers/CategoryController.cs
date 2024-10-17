@@ -45,6 +45,7 @@ namespace FinWebMvcIdentity.Controllers
                 category.User = User.Identity.Name;
                 _context.Add(category);
                 await _context.SaveChangesAsync();
+                TempData["AlertMessage"] = "Categoria criada com sucesso";
                 return RedirectToAction(nameof(Index));
             }
 
@@ -89,6 +90,7 @@ namespace FinWebMvcIdentity.Controllers
                     category.User = User.Identity.Name;
                     _context.Update(category);
                     await _context.SaveChangesAsync();
+                    TempData["AlertMessage"] = "Categoria alterada com sucesso";
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -142,6 +144,7 @@ namespace FinWebMvcIdentity.Controllers
             }
 
             await _context.SaveChangesAsync();
+            TempData["AlertMessage"] = "Categoria excluída com sucesso";
             return RedirectToAction(nameof(Index));
         }
 
