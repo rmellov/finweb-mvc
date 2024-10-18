@@ -1,12 +1,9 @@
 ﻿using FinWebMvcIdentity.Data;
-using FinWebMvcIdentity.Models.ViewModel;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
 
 namespace FinWebMvcIdentity.Services
 {
-    public class RecordService : Controller
+    public class RecordService
     {
         private readonly ApplicationDbContext _context;
 
@@ -15,14 +12,13 @@ namespace FinWebMvcIdentity.Services
             _context = context;
         }
 
-        public async Task<List<RecordByCategoryViewModel>> GetRecordsByCategoryAsync()
+        public async Task<IDictionary<string, decimal>> GetExpenseRecordsByCategoryAsync(string userName)
         {
-            // TODO CORRIGIR 
             var records = await _context.Records
-                .Where(a => a.User == User.Identity.Name)
-                .GroupBy(r => r.Category)
-                .Select(g => new RecordByCategoryViewModel { Category = g.Key, Total = g.Sum(d => (double)d.Value) })                
-                .ToListAsync();
+                .Include(r => r.Category)
+                .Where(r => r.Type == Enums.EType.Expense && r.User == userName)
+                .GroupBy(r => r.Category.Description)
+                .ToDictionaryAsync(g => g.Key, g => g.Sum(d => d.Value));                
 
             return records;
         }

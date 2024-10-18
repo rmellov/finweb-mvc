@@ -1,4 +1,5 @@
 using FinWebMvcIdentity.Models;
+using FinWebMvcIdentity.Models.ViewModel;
 using FinWebMvcIdentity.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -18,8 +19,15 @@ namespace FinWebMvcIdentity.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var recordsByCategory = await _recordService.GetRecordsByCategoryAsync();
-            return View(recordsByCategory);
+            var userName = User.Identity.Name;
+            var expenseRecordsByCategory = await _recordService.GetExpenseRecordsByCategoryAsync(userName);
+
+            var viewModel = new HomeViewModel
+            {
+                ExpenseRecordsByCategory = expenseRecordsByCategory
+            };
+            
+            return View(viewModel);
         }
 
         public IActionResult Privacy()
