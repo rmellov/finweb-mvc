@@ -21,10 +21,14 @@ namespace FinWebMvcIdentity.Controllers
         {
             var userName = User.Identity.Name;
             var expenseRecordsByCategory = await _recordService.GetExpenseRecordsByCategoryAsync(userName);
+            var incomeRecordsByCategory = await _recordService.GetIncomeRecordsByCategoryAsync(userName);
+            var recordValues = await _recordService.GetRecordsValuesAsync(userName);
 
             var viewModel = new HomeViewModel
             {
-                ExpenseRecordsByCategory = expenseRecordsByCategory
+                ExpenseRecordsByCategory = expenseRecordsByCategory,
+                IncomeRecordsByCategory = incomeRecordsByCategory,
+                RecordValues = recordValues
             };
             
             return View(viewModel);

@@ -4,6 +4,14 @@
     ViewData["Title"] = "Dashboard";
 
     var expenseRecordsByCategory = Model.ExpenseRecordsByCategory;
+    var incomeRecordsByCategory = Model.IncomeRecordsByCategory;
+    var recordValues = Model.RecordValues;
+
+    var pendingExpenses = recordValues["PendingExpenses"];
+    var Expenses = recordValues["Expenses"];
+    var pendingIncomes = recordValues["PendingIncomes"];
+    var Incomes = recordValues["Incomes"];
+    var total = recordValues["Total"];
 }
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -23,7 +31,13 @@
 }
 else
 {
-   <div class="container">
+    <div class="card text-center">
+        <h1>Dashboard</h1>
+    </div>
+
+    <br />
+    
+    <div class="row">
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
@@ -34,7 +48,30 @@ else
                 </div>
             </div>
         </div>
-   </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    Receitas por Categoria
+                </div>
+                <div class="card-body">
+                    <canvas id="incomeRecordsByCategoryChart" width="400" height="400"></canvas>
+                </div>
+            </div>
+        </div>            
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    Movimentações
+                </div>
+                <div class="card-body">
+                    <canvas id="recordsChart" width="400" height="400"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>    
 }
 
 <script>
@@ -78,4 +115,90 @@ else
             }
         }
     });
+
+    var categoryCtx = document.getElementById('incomeRecordsByCategoryChart').getContext('2d');
+    var categoryChart = new Chart(categoryCtx, {
+        type: 'pie',
+        data: {
+            labels: @Html.Raw(Json.Serialize(incomeRecordsByCategory.Keys)),
+            datasets: [{
+                label: 'Valores por Categoria',
+                data: @Html.Raw(Json.Serialize(incomeRecordsByCategory.Values)),
+                backgroundColor: [
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    enabled: true
+                }
+            }
+        }
+    });
+
+    var ctx = document.getElementById('recordsChart').getContext('2d');
+    var expensesChart = new Chart(ctx, {
+        type: 'line', 
+        data: {
+            labels: ['Despesas Pendentes', 'Despesas', 'Receitas Pendentes', 'Receitas', 'Saldo'],
+            datasets: [{
+                label: 'Valores',
+                data: [@pendingExpenses, @Expenses, @pendingIncomes, @Incomes, @total],
+                backgroundColor: [
+                    'rgba(217, 61, 75, 0.2)',
+                    'rgba(217, 61, 75, 0.2)',
+                    'rgba(175, 209, 161, 0.2)',
+                    'rgba(175, 209, 161, 0.2)',
+                    'rgba(181, 181, 181, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(217, 61, 75, 1)',
+                    'rgba(217, 61, 75, 1)',
+                    'rgba(175, 209, 161, 1)',
+                    'rgba(175, 209, 161, 1)',
+                    'rgba(181, 181, 181, 1)'
+                ],
+                borderWidth: 1                
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false, 
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    enabled: true
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
 </script>
