@@ -39,6 +39,7 @@ namespace FinWebMvcIdentity.Models
         [Required(ErrorMessage = "Campo obrigatório")]
         public EStatus Status { get; set; }
 
+        [DisplayName("Categoria")]
         public Category? Category { get; set; }
 
         public string? User { get; set; }

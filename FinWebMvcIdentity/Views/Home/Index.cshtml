@@ -36,6 +36,53 @@ else
     </div>
 
     <br />
+
+    <div class="card">
+        <div class="card-header">
+            Caixa
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <div class="card text-center" style="background-color: #d93d4b;">
+                        <div class="card-body">
+                            <p>Despesas Pendente <br /> @pendingExpenses.ToString("C")</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-center" style="background-color: #d93d4b;">
+                        <div class="card-body">
+                            <p>Despesas <br /> @Expenses.ToString("C")</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-center" style="background-color: #afd1a1;">
+                        <div class="card-body">
+                            <p>Receitas Pendente <br /> @pendingIncomes.ToString("C")</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-center" style="background-color: #afd1a1;">
+                        <div class="card-body">
+                            <p>Receitas <br /> @Incomes.ToString("C")</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-center" style="background-color: #b5b5b5;">
+                        <div class="card-body">
+                            <p>Saldo (Receitas-Despesas) <br /> @total.ToString("C")</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br />
     
     <div class="row">
         <div class="col-md-6">
