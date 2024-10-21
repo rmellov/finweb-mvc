@@ -18,17 +18,31 @@ namespace FinWebMvcIdentity.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index(int? page)
+        public async Task<IActionResult> Index(int? page, DateTime? minDate, DateTime? maxDate)
         {
             int pageSize = 10;
             int pageNumber = page ?? 1;
 
-            var applicationDbContext = await _context.Records
+            var query = _context.Records
                 .AsNoTracking()
                 .Include(c => c.Category)
-                .Where(r => r.User == User.Identity.Name)
-                .ToListAsync();
+                .Where(r => r.User == User.Identity.Name);
 
+            if (minDate.HasValue)
+            {
+                query = query.Where(d => d.RegisterDate >= minDate.Value);
+                ViewBag.MinDate = minDate;
+            };
+
+            if (maxDate.HasValue)
+            {
+                query = query.Where(d => d.RegisterDate <= maxDate.Value);
+                ViewBag.MaxDate = maxDate;
+            };
+
+            query = query.OrderByDescending(d => d.RegisterDate);
+
+            var applicationDbContext = await query.ToListAsync();
             return View(applicationDbContext.ToPagedList(pageNumber, pageSize));
         }        
 

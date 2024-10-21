@@ -2,12 +2,11 @@
 @model FinWebMvcIdentity.Models.Record
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Novo Lançamento";
 }
 
-<h1>Create</h1>
-
-<h4>Record</h4>
+<br />
+<h4>Novo Lançamento</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -52,16 +51,14 @@
                     <option selected="selected" value=""></option>
                 </select>
                 <span asp-validation-for="Status" class="text-danger"></span>
-            </div>            
+            </div>       
+            <br />
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-warning">Voltar para a lista</a>
+                <input type="submit" value="Salvar" class="btn btn-primary" />
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

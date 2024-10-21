@@ -4,8 +4,10 @@
 @model IPagedList<FinWebMvcIdentity.Models.Category>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Categoria";
 }
+
+<br />
 
 @if (TempData["AlertMessage"] != null)
 {
@@ -31,6 +33,7 @@
     <h1>Categorias</h1>
 </div>
 <br />
+
 <table class="table table-striped table-hover text-center">
     <thead class="table-dark">
         <tr>
